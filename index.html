@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="btn">btn</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+      $("#btn").on("click", function () {
+        var queryURL =
+          "https://api.priceapi.com/v2/jobs?token=EXWSZKYGLLRJXAZEKWPTWSNTNXTTSYANVTOGCNJOEHTDZEQWIIRMILTFXOQWXMTW";
+
+        $.ajax({
+          url: queryURL,
+          method: "POST",
+          data: {
+            source: "ebay",
+            country: "us",
+            topic: "product_and_offers",
+            key: "term",
+            values: "0190198451934",
+          },
+        }).then(function (response) {
+          $.ajax({
+            url:
+              "https://api.priceapi.com/v2/jobs/" +
+              response.job_id +
+              "?token=EXWSZKYGLLRJXAZEKWPTWSNTNXTTSYANVTOGCNJOEHTDZEQWIIRMILTFXOQWXMTW",
+            method: "GET",
+          }).then(function (res2) {
+            console.log(res2);
+          });
+          console.log(response);
+        });
+      });
+    </script>
+  </body>
+</html>
